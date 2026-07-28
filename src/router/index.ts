@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import UserListView from '@/views/UserListView.vue'
-import UserDetailView from '@/views/UserDetailView.vue'
+import UserLayoutView from '@/views/user/LayoutView.vue'
+import UserProfileView from '@/views/user/ProfileView.vue'
+import UserPostsView from '@/views/user/PostsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,9 +14,21 @@ const router = createRouter({
     },
     {
       path: '/users/:id',
-      name: 'user-detail-view',
-      component: UserDetailView,
+      name: 'user-layout-view',
+      component: UserLayoutView,
       props: true,
+      children: [
+        {
+          path: '',
+          name: 'user-profile-view',
+          component: UserProfileView,
+        },
+        {
+          path: 'posts',
+          name: 'user-posts-view',
+          component: UserPostsView,
+        },
+      ],
     },
   ],
 })

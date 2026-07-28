@@ -21,3 +21,10 @@ export interface User {
   address: Address
   company: Company
 }
+
+export interface Post {
+  userId: number
+  id: number
+  title: string
+  body: string
+}

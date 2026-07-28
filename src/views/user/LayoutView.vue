@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import type { User } from '@/types'
 import UserService from '@/services/UserService'
+import { useRouter } from 'vue-router'
 
 const user = ref<User | null>(null)
 const props = defineProps({
@@ -10,13 +11,20 @@ const props = defineProps({
     required: true,
   },
 })
+const router = useRouter()
+
 onMounted(() => {
   UserService.getUser(Number(props.id))
     .then((response) => {
-      user.value = response.data
+      // jsonplaceholder returns 404 for a missing user, but guard for an empty body too
+      if (!response.data || !response.data.id) {
+        router.push({ name: '404-resource-view', params: { resource: 'user' } })
+      } else {
+        user.value = response.data
+      }
     })
-    .catch((error) => {
-      console.error('There was an error!', error)
+    .catch(() => {
+      router.push({ name: '404-resource-view', params: { resource: 'user' } })
     })
 })
 </script>

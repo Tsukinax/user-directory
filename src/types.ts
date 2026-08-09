@@ -32,3 +32,7 @@ export interface Post {
 export interface MessageState {
   message: string
 }
+
+export interface UserState {
+  user: User | null
+}

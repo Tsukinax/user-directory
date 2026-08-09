@@ -1,32 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import type { User } from '@/types'
-import UserService from '@/services/UserService'
-import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
-const user = ref<User | null>(null)
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-})
-const router = useRouter()
-
-onMounted(() => {
-  UserService.getUser(Number(props.id))
-    .then((response) => {
-      // jsonplaceholder returns 404 for a missing user, but guard for an empty body too
-      if (!response.data || !response.data.id) {
-        router.push({ name: '404-resource-view', params: { resource: 'user' } })
-      } else {
-        user.value = response.data
-      }
-    })
-    .catch(() => {
-      router.push({ name: '404-resource-view', params: { resource: 'user' } })
-    })
-})
+const store = useUserStore()
+const { user } = storeToRefs(store)
 </script>
 
 <template>

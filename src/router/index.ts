@@ -3,6 +3,7 @@ import UserListView from '@/views/UserListView.vue'
 import UserLayoutView from '@/views/user/LayoutView.vue'
 import UserProfileView from '@/views/user/ProfileView.vue'
 import UserPostsView from '@/views/user/PostsView.vue'
+import UserEditView from '@/views/user/EditView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
 const router = createRouter({
@@ -28,6 +29,11 @@ const router = createRouter({
           path: 'posts',
           name: 'user-posts-view',
           component: UserPostsView,
+        },
+        {
+          path: 'edit',
+          name: 'user-edit-view',
+          component: UserEditView,
         },
       ],
     },
